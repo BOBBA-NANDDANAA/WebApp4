@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusive Deals</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f9; }
+        .container { width: 80%; margin: 20px auto; }
+        h1 { text-align: center; }
+        .search-bar { text-align: center; margin-bottom: 20px; }
+        input[type="text"] { padding: 10px; width: 200px; }
+        button { padding: 10px; cursor: pointer; }
+        .deals { display: flex; flex-wrap: wrap; justify-content: space-between; }
+        .card {
+            background: white; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 30%; margin: 10px; text-align: center; padding: 20px;
+        }
+        .card img { max-width: 100px; margin-bottom: 10px; }
+        .card h3 { margin: 10px 0; color: #333; }
+        .card p { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Latest Deals</h1>
+        <div class="search-bar">
+            <form method="GET" action="/">
+                <input type="text" name="company" placeholder="Enter Company Name" value="{{ search_company }}">
+                <button type="submit">Search by Company</button>
+            </form>
+        </div>
+        <div class="deals">
+            {% for deal in deals %}
+            <div class="card">
+                <img src="{{ deal.Logo }}" alt="{{ deal.Company }} Logo" onerror="this.onerror=null;this.src='/static/logos/default_logo.png';">
+                <!-- Link to details page -->
+                <a href="{{ url_for('company_details', company_name=deal.Company) }}">
+                    <h3>{{ deal.Company }}</h3>
+                </a>
+                <p><strong>Offer:</strong> {{ deal.Offer }}% Off</p>
+                <p><strong>Expires On:</strong> {{ deal['Expire Date'] }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
